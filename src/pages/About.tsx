@@ -1,10 +1,11 @@
 
 import { useState, useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Home, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const About = () => {
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const awards = [
     {
@@ -60,6 +61,13 @@ const About = () => {
     'Mentoring & Team Building'
   ];
 
+  const menuItems = [
+    { name: 'Home', path: '/', icon: Home },
+    { name: 'Work', path: '/projects' },
+    { name: 'Blog', path: '/blog' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
   // Handle scroll percentage calculation
   useEffect(() => {
     const handleScroll = () => {
@@ -75,9 +83,43 @@ const About = () => {
   }, []);
 
   return (
-    <div className="bg-background">
+    <div className="bg-background overflow-y-auto">
+      {/* Floating Navigation Menu */}
+      <div className="fixed top-6 right-6 z-50">
+        <div className={`bg-background/80 backdrop-blur-md border border-border rounded-full transition-all duration-300 ${isMenuOpen ? 'px-4 py-2' : 'p-3'}`}>
+          {!isMenuOpen ? (
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="p-2 hover:bg-muted rounded-full transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+          ) : (
+            <div className="flex items-center gap-2">
+              {menuItems.map((item, index) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="flex items-center gap-2 px-3 py-2 hover:bg-muted rounded-full transition-colors text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.icon && <item.icon size={16} />}
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 hover:bg-muted rounded-full transition-colors ml-2"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Intro Section */}
-      <section className="flex items-center justify-center px-6 py-24">
+      <section className="px-6 py-24 pt-32">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-6xl md:text-8xl font-thin mb-8 tracking-tight animate-fade-in">
             About
