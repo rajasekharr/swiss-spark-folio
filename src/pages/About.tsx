@@ -65,11 +65,12 @@ const About = () => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
+      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       setScrollPercentage(Math.min(100, Math.max(0, scrollPercent)));
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Calculate initial scroll percentage
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
