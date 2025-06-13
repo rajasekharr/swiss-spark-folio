@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Swiss Design System */
+/* Swiss Design System with Emily-inspired typography */
 
 @layer base {
   :root {
@@ -92,26 +92,36 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-white text-gray-900 font-sans;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     line-height: 1.6;
+    font-weight: 300;
+    letter-spacing: 0.02em;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 100;
+    letter-spacing: -0.02em;
+  }
 }
 
 @layer components {
-  .swiss-heading {
-    @apply font-sans font-light tracking-tight;
+  .emily-heading {
+    @apply font-thin tracking-tight;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
-  .swiss-body {
-    @apply font-sans font-normal leading-relaxed;
+  .emily-body {
+    @apply font-light leading-relaxed;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
-  .swiss-mono {
-    @apply font-mono text-sm;
+  .emily-nav {
+    @apply font-light tracking-wide;
   }
   
   .parallax-element {
@@ -125,7 +135,12 @@
   }
   
   .perspective-card:hover {
-    transform: rotateX(2deg) rotateY(5deg);
+    transform: rotateX(1deg) rotateY(2deg);
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -133,4 +148,51 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .font-thin {
+    font-weight: 100;
+  }
+
+  .tracking-tight {
+    letter-spacing: -0.025em;
+  }
+
+  .tracking-wide {
+    letter-spacing: 0.025em;
+  }
+
+  .tracking-widest {
+    letter-spacing: 0.1em;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
 }
