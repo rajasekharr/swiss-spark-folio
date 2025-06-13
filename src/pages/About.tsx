@@ -77,7 +77,7 @@ const About = () => {
   return (
     <div className="bg-background">
       {/* Intro Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 py-24">
+      <section className="flex items-center justify-center px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-6xl md:text-8xl font-thin mb-8 tracking-tight animate-fade-in">
             About
@@ -90,7 +90,7 @@ const About = () => {
       </section>
 
       {/* Philosophy Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 py-24">
+      <section className="px-6 py-24">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="animate-fade-in">
@@ -124,7 +124,7 @@ const About = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 py-24">
+      <section className="px-6 py-24">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-thin mb-12 text-center tracking-tight animate-fade-in">
             Core Competencies
@@ -145,7 +145,7 @@ const About = () => {
       </section>
 
       {/* Awards Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 py-24">
+      <section className="px-6 py-24">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-thin mb-12 text-center tracking-tight animate-fade-in">
             Recognition & Awards
@@ -181,7 +181,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="min-h-screen flex items-center justify-center bg-foreground text-background px-6 py-24">
+      <section className="bg-foreground text-background px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl md:text-6xl font-thin mb-6 tracking-tight animate-fade-in">
             Let's Work Together
