@@ -1,7 +1,7 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getProjectById, projects } from '@/data/projects';
+import FloatingMenu from '../components/FloatingMenu';
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,12 +9,15 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-light swiss-heading mb-4">Project Not Found</h1>
-          <Link to="/projects" className="text-muted-foreground hover:text-foreground">
-            ← Back to Projects
-          </Link>
+      <div className="internal-page bg-background">
+        <FloatingMenu />
+        <div className="min-h-screen pt-20 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-light swiss-heading mb-4">Project Not Found</h1>
+            <Link to="/projects" className="text-muted-foreground hover:text-foreground">
+              ← Back to Projects
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -25,7 +28,9 @@ const ProjectDetail = () => {
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="internal-page bg-background">
+      <FloatingMenu />
+      
       {/* Header */}
       <section className="py-16 bg-background">
         <div className="max-w-4xl mx-auto px-6">

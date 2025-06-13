@@ -1,6 +1,6 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import FloatingMenu from '../components/FloatingMenu';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +36,9 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="internal-page bg-background">
+      <FloatingMenu />
+      
       {/* Header */}
       <section className="py-20 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">

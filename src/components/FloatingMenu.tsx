@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const menuItems = [
   { name: 'Home', path: '/', icon: Home },
   { name: 'Work', path: '/projects' },
+  { name: 'About', path: '/about' },
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
 ];
@@ -14,8 +15,8 @@ const FloatingMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="floating-menu">
-      <div className={`floating-menu-trigger ${isMenuOpen ? 'floating-menu-content px-0 py-0' : ''}`}>
+    <div className="fixed top-6 right-6 z-50">
+      <div className={`bg-background/80 backdrop-blur-md border border-border rounded-full transition-all duration-300 ${isMenuOpen ? 'px-4 py-2' : 'p-3'}`}>
         {!isMenuOpen ? (
           <button
             onClick={() => setIsMenuOpen(true)}
@@ -24,12 +25,12 @@ const FloatingMenu = () => {
             <Menu size={20} />
           </button>
         ) : (
-          <div className="min-w-48">
+          <div className="flex items-center gap-2">
             {menuItems.map((item, index) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className="floating-menu-item"
+                className="flex items-center gap-2 px-3 py-2 hover:bg-muted rounded-full transition-colors text-sm"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.icon && <item.icon size={16} />}
@@ -38,10 +39,9 @@ const FloatingMenu = () => {
             ))}
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="floating-menu-item w-full justify-center border-t border-border"
+              className="p-2 hover:bg-muted rounded-full transition-colors ml-2"
             >
               <X size={16} />
-              <span>Close</span>
             </button>
           </div>
         )}

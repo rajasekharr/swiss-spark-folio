@@ -1,8 +1,8 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, getAllCategories } from '@/data/projects';
+import FloatingMenu from '../components/FloatingMenu';
 
 const Projects = () => {
   const [currentSection, setCurrentSection] = useState(0);
@@ -182,6 +182,8 @@ const Projects = () => {
 
   return (
     <div className="h-screen overflow-hidden relative">
+      <FloatingMenu />
+      
       {renderSection()}
 
       {/* Navigation Arrows */}

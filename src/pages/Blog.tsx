@@ -1,12 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Menu, X } from 'lucide-react';
+import FloatingMenu from '../components/FloatingMenu';
+import ScrollProgress from '../components/ScrollProgress';
 
 const Blog = () => {
-  const [scrollPercentage, setScrollPercentage] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const posts = [
     {
       id: 'design-systems-at-scale',
@@ -46,62 +44,9 @@ const Blog = () => {
     }
   ];
 
-  const menuItems = [
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Work', path: '/projects' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-  ];
-
-  // Handle scroll percentage calculation
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setScrollPercentage(Math.min(100, Math.max(0, scrollPercent)));
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Calculate initial scroll percentage
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="bg-background overflow-y-auto">
-      {/* Floating Navigation Menu */}
-      <div className="fixed top-6 right-6 z-50">
-        <div className={`bg-background/80 backdrop-blur-md border border-border rounded-full transition-all duration-300 ${isMenuOpen ? 'px-4 py-2' : 'p-3'}`}>
-          {!isMenuOpen ? (
-            <button
-              onClick={() => setIsMenuOpen(true)}
-              className="p-2 hover:bg-muted rounded-full transition-colors"
-            >
-              <Menu size={20} />
-            </button>
-          ) : (
-            <div className="flex items-center gap-2">
-              {menuItems.map((item, index) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-muted rounded-full transition-colors text-sm"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.icon && <item.icon size={16} />}
-                  <span>{item.name}</span>
-                </Link>
-              ))}
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 hover:bg-muted rounded-full transition-colors ml-2"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+    <div className="internal-page bg-background">
+      <FloatingMenu />
 
       {/* Header Section */}
       <section className="px-6 py-24 pt-32">
@@ -225,13 +170,7 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Scroll Percentage Indicator */}
-      <div className="fixed bottom-0 left-0 w-full h-1 bg-foreground/20 z-20">
-        <div 
-          className="h-full bg-foreground transition-all duration-100 ease-out"
-          style={{ width: `${scrollPercentage}%` }}
-        />
-      </div>
+      <ScrollProgress />
     </div>
   );
 };
