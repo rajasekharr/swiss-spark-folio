@@ -83,10 +83,10 @@ const About = () => {
   }, []);
 
   return (
-    <div className="bg-background overflow-y-auto">
+    <div className="internal-page bg-background">
       {/* Floating Navigation Menu */}
-      <div className="fixed top-6 right-6 z-50">
-        <div className={`bg-background/80 backdrop-blur-md border border-border rounded-full transition-all duration-300 ${isMenuOpen ? 'px-4 py-2' : 'p-3'}`}>
+      <div className="floating-menu">
+        <div className={`floating-menu-trigger ${isMenuOpen ? 'floating-menu-content px-0 py-0' : ''}`}>
           {!isMenuOpen ? (
             <button
               onClick={() => setIsMenuOpen(true)}
@@ -95,12 +95,12 @@ const About = () => {
               <Menu size={20} />
             </button>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="min-w-48">
               {menuItems.map((item, index) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-muted rounded-full transition-colors text-sm"
+                  className="floating-menu-item"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.icon && <item.icon size={16} />}
@@ -109,9 +109,10 @@ const About = () => {
               ))}
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="p-2 hover:bg-muted rounded-full transition-colors ml-2"
+                className="floating-menu-item w-full justify-center border-t border-border"
               >
                 <X size={16} />
+                <span>Close</span>
               </button>
             </div>
           )}
@@ -244,9 +245,9 @@ const About = () => {
       </section>
 
       {/* Scroll Percentage Indicator */}
-      <div className="fixed bottom-0 left-0 w-full h-1 bg-foreground/20 z-20">
+      <div className="scroll-progress">
         <div 
-          className="h-full bg-foreground transition-all duration-100 ease-out"
+          className="scroll-progress-bar"
           style={{ width: `${scrollPercentage}%` }}
         />
       </div>
