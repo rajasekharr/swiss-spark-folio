@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getProjectById, projects } from '@/data/projects';
