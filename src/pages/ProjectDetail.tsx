@@ -1,3 +1,4 @@
+
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getProjectById, projects } from '@/data/projects';
@@ -75,7 +76,7 @@ const ProjectDetail = () => {
         </div>
       </section>
 
-      {/* Project Details */}
+      {/* Case Study Content */}
       <section className="pb-16">
         <div className="max-w-4xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-12 mb-16">
@@ -119,27 +120,27 @@ const ProjectDetail = () => {
             </div>
           </div>
 
-          {/* Project Description */}
+          {/* Case Study Details */}
           <div className="prose prose-lg max-w-none mb-16">
-            <h2 className="text-2xl font-light swiss-heading mb-6">Project Overview</h2>
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              {project.description}
-            </p>
+            <h2 className="text-2xl font-light swiss-heading mb-6">Case Study</h2>
+            <div className="text-muted-foreground leading-relaxed space-y-6">
+              <p>{project.description}</p>
+              
+              <div>
+                <h3 className="text-xl font-light swiss-heading mb-3 text-foreground">Challenge</h3>
+                <p>{project.challenge}</p>
+              </div>
 
-            <h3 className="text-xl font-light swiss-heading mb-4">Challenge</h3>
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              {project.challenge}
-            </p>
+              <div>
+                <h3 className="text-xl font-light swiss-heading mb-3 text-foreground">Solution</h3>
+                <p>{project.solution}</p>
+              </div>
 
-            <h3 className="text-xl font-light swiss-heading mb-4">Solution</h3>
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              {project.solution}
-            </p>
-
-            <h3 className="text-xl font-light swiss-heading mb-4">Outcome</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              {project.outcome}
-            </p>
+              <div>
+                <h3 className="text-xl font-light swiss-heading mb-3 text-foreground">Outcome</h3>
+                <p>{project.outcome}</p>
+              </div>
+            </div>
           </div>
 
           {/* Additional Images */}
@@ -158,6 +159,17 @@ const ProjectDetail = () => {
               </div>
             </div>
           )}
+
+          {/* Back to Projects Link */}
+          <div className="text-center mb-16">
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-full transition-colors duration-200"
+            >
+              <ArrowLeft size={20} />
+              Back to Projects
+            </Link>
+          </div>
         </div>
       </section>
 

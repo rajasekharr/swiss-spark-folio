@@ -20,10 +20,10 @@ const Projects = () => {
       <section className="py-20 bg-background">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-7xl font-light swiss-heading mb-8">
-            Projects
+            UX Projects
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-12">
-            A comprehensive collection of design projects spanning multiple industries, 
+            A comprehensive collection of UX projects spanning multiple industries, 
             platforms, and user experience challenges.
           </p>
           
