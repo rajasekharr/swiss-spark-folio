@@ -13,7 +13,7 @@ const awards = [
     description: 'Awarded for pioneering scalable design system implementation.'
   },
   {
-    title: 'Best Digital Transformation',
+    title: 'Best Employee Award',
     organization: 'Minacs Digital Excellence',
     year: '2022',
     description: 'Leading successful digital transformation initiatives with measurable impact.'
