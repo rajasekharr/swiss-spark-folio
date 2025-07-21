@@ -1,11 +1,34 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { getProjectById, projects } from '@/data/projects';
+import { useProject } from '@/hooks/useProject';
+import { getProjectNavigation } from '@/lib/projects';
+import { useQuery } from '@tanstack/react-query';
 import FloatingMenu from '../components/FloatingMenu';
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const project = id ? getProjectById(id) : null;
+  const { data: project, isLoading: isProjectLoading } = useProject(id);
+  
+  // Get navigation data
+  const { data: navigation } = useQuery({
+    queryKey: ['project-navigation', id],
+    queryFn: () => getProjectNavigation(id!),
+    enabled: !!id,
+  });
+
+  if (isProjectLoading) {
+    return (
+      <div className="internal-page bg-background">
+        <FloatingMenu />
+        <div className="min-h-screen pt-20 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-foreground mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading project...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -23,9 +46,8 @@ const ProjectDetail = () => {
     );
   }
 
-  const currentIndex = projects.findIndex(p => p.id === project.id);
-  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
-  const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+  const prevProject = navigation?.prevProject || null;
+  const nextProject = navigation?.nextProject || null;
 
   return (
     <div className="internal-page bg-background">

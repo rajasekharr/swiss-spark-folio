@@ -1,16 +1,29 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { projects, getAllCategories } from '@/data/projects';
+import { useProjects, useProjectsByCategory } from '@/hooks/useProjects';
+import { getAllCategories } from '@/lib/projects';
 import FloatingMenu from '../components/FloatingMenu';
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const categories = ['All', ...getAllCategories()];
+  const [categories, setCategories] = useState<string[]>(['All']);
   
-  const filteredProjects = selectedCategory === 'All' 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+  const { data: filteredProjects = [], isLoading: isProjectsLoading } = useProjectsByCategory(selectedCategory);
+  
+  // Load categories on component mount
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const cats = await getAllCategories();
+        setCategories(['All', ...cats]);
+      } catch (error) {
+        console.error('Failed to load categories:', error);
+      }
+    };
+    
+    loadCategories();
+  }, []);
 
   return (
     <div className="internal-page bg-background">
@@ -49,8 +62,30 @@ const Projects = () => {
       {/* Projects Grid */}
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
+          {isProjectsLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="bg-card rounded-lg overflow-hidden shadow-lg animate-pulse">
+                  <div className="w-full h-64 bg-muted" />
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="h-4 bg-muted rounded w-16" />
+                      <span className="text-muted-foreground">•</span>
+                      <div className="h-4 bg-muted rounded w-12" />
+                    </div>
+                    <div className="h-6 bg-muted rounded mb-3" />
+                    <div className="h-4 bg-muted rounded mb-4" />
+                    <div className="flex flex-wrap gap-1">
+                      <div className="h-6 bg-muted rounded w-16" />
+                      <div className="h-6 bg-muted rounded w-20" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProjects.map((project, index) => (
               <Link
                 key={project.id}
                 to={`/projects/${project.id}`}
@@ -103,11 +138,12 @@ const Projects = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
           
-          {filteredProjects.length === 0 && (
+          {!isProjectsLoading && filteredProjects.length === 0 && (
             <div className="text-center py-16">
               <p className="text-muted-foreground text-lg">
                 No projects found for the selected category.
