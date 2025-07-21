@@ -51,7 +51,7 @@ const ContentManager = () => {
         .order('page_name', { ascending: true });
       
       if (error) throw error;
-      setContent(data || []);
+      setContent((data || []) as SiteContent[]);
     } catch (error: any) {
       toast({ 
         title: 'Error', 
