@@ -128,6 +128,42 @@ export type Database = {
         }
         Relationships: []
       }
+      visitor_analytics: {
+        Row: {
+          city: string | null
+          country: string | null
+          id: string
+          ip_address: unknown | null
+          page_path: string
+          referrer: string | null
+          user_agent: string | null
+          visited_at: string | null
+          visitor_id: string
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          id?: string
+          ip_address?: unknown | null
+          page_path: string
+          referrer?: string | null
+          user_agent?: string | null
+          visited_at?: string | null
+          visitor_id: string
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          id?: string
+          ip_address?: unknown | null
+          page_path?: string
+          referrer?: string | null
+          user_agent?: string | null
+          visited_at?: string | null
+          visitor_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

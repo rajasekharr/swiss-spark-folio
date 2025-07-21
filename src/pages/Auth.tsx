@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,9 +15,11 @@ const Auth = () => {
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState('signin');
+  const { toast } = useToast();
 
   // Redirect if already authenticated
   if (user) {
@@ -57,10 +61,37 @@ const Auth = () => {
     if (error) {
       setError(error.message);
     } else {
-      setError('Check your email for the confirmation link!');
+      toast({
+        title: "Account created!",
+        description: "Check your email for the confirmation link.",
+      });
     }
     
     setIsLoading(false);
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setResetLoading(true);
+    setError('');
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('reset-email') as string;
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth`,
+    });
+
+    if (error) {
+      setError(error.message);
+    } else {
+      toast({
+        title: "Reset link sent!",
+        description: "Check your email for the password reset link.",
+      });
+    }
+
+    setResetLoading(false);
   };
 
   return (
@@ -83,9 +114,10 @@ const Auth = () => {
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                <TabsTrigger value="reset">Reset</TabsTrigger>
               </TabsList>
               
               <TabsContent value="signin">
@@ -181,6 +213,32 @@ const Auth = () => {
                   
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? 'Creating account...' : 'Sign Up'}
+                  </Button>
+                </form>
+              </TabsContent>
+
+              <TabsContent value="reset">
+                <form onSubmit={handleForgotPassword} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="reset-email">Email</Label>
+                    <Input
+                      id="reset-email"
+                      name="reset-email"
+                      type="email"
+                      placeholder="Enter your email"
+                      required
+                      disabled={resetLoading}
+                    />
+                  </div>
+                  
+                  {error && (
+                    <Alert>
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  <Button type="submit" className="w-full" disabled={resetLoading}>
+                    {resetLoading ? 'Sending...' : 'Send Reset Link'}
                   </Button>
                 </form>
               </TabsContent>

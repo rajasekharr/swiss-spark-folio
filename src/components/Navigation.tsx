@@ -11,7 +11,6 @@ const Navigation = () => {
     { name: 'About', path: '/about' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Admin', path: '/auth' },
   ];
 
   return (
@@ -20,11 +19,19 @@ const Navigation = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
         <div className="flex justify-between items-center h-24 px-8 lg:px-12">
           {/* Logo - Left Side */}
-          <Link to="/" className="relative">
-            <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-              <span className="text-white text-xl font-light">E</span>
-            </div>
-          </Link>
+          <div className="flex flex-col items-start">
+            <Link to="/" className="relative">
+              <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
+                <span className="text-white text-xl font-light">E</span>
+              </div>
+            </Link>
+            <Link 
+              to="/auth" 
+              className="text-xs text-white/50 hover:text-white/80 transition-colors mt-1 ml-1"
+            >
+              admin
+            </Link>
+          </div>
 
           {/* Menu Button - Right Side */}
           <button

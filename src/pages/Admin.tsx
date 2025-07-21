@@ -4,13 +4,14 @@ import { Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Settings, FileText, Image, Users } from 'lucide-react';
+import { LogOut, Settings, FileText, Image, Users, BarChart3 } from 'lucide-react';
 import ProjectManager from '@/components/admin/ProjectManager';
 import ContentManager from '@/components/admin/ContentManager';
+import Analytics from '@/components/admin/Analytics';
 
 const Admin = () => {
   const { user, signOut, loading } = useAuth();
-  const [activeTab, setActiveTab] = useState('projects');
+  const [activeTab, setActiveTab] = useState('analytics');
 
   if (loading) {
     return (
@@ -51,7 +52,11 @@ const Admin = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
+            <TabsTrigger value="analytics" className="gap-2">
+              <BarChart3 size={16} />
+              Analytics
+            </TabsTrigger>
             <TabsTrigger value="projects" className="gap-2">
               <FileText size={16} />
               Projects
@@ -63,6 +68,10 @@ const Admin = () => {
           </TabsList>
 
           <div className="mt-8">
+            <TabsContent value="analytics" className="space-y-6">
+              <Analytics />
+            </TabsContent>
+
             <TabsContent value="projects" className="space-y-6">
               <Card>
                 <CardHeader>
